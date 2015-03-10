@@ -1,1 +1,3 @@
 stop_info
+*.pyc
+myproject/
