@@ -1,22 +1,37 @@
 from flask import url_for
 from app import db
+from datetime import datetime 
 
 class Stop(db.Document):
+    created = db.DateTimeField(default=datetime.now)
     title = db.StringField(max_length=255, required=True)
-    timestamp = db.IntField(required = True)
-    stopid = db.StringField(max_length=255, required=True)
-    routepre = db.ListField(db.EmbeddedDocumentField('Routepre'))
+    stopid = db.StringField(max_length=255, required=True, unique=True)
+    routeprelist = db.ListField(db.EmbeddedDocumentField('Routepredictions'))
 
-    meta = {'indexes':['stopid']}
+    meta = {'indexes':[
+            'stopid',
+            {
+                'fields':['created'],
+                'expireAfterSeconds':60
+            }
+        ]
+    }
 
-class Routepre(db.EmbeddedDocument):
+#prediction information for one route
+class Routepredictions(db.EmbeddedDocument):
     routetag = db.StringField(max_length=255, required=True)
+    dirlist = db.ListField(db.EmbeddedDocumentField('Direction'))
     hasdata = db.BooleanField(required=True)
-    pretime = db.ListField(db.IntField())
+    
+#prediction information for one direction of one route
+class Direction(db.EmbeddedDocument):
+    title = db.StringField(max_length=255, required=True)
+    timelist = db.ListField(db.IntField())
 
+#stop's geo information
 class Stopgeo(db.Document):
     tag = db.StringField(max_length=255, required=True)
-    stopid = db.StringField(max_length=255, required=True)
+    stopid = db.StringField(max_length=255, required=True,unique=True)
     title = db.StringField(required=True)
     location = db.PointField(required=True)
 
