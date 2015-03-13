@@ -1,7 +1,9 @@
 import urllib2
 import logging
+import json
 import xml.etree.ElementTree as ET
-from flask import Blueprint, request, redirect, render_template, url_for, jsonify
+from flask import Response, Blueprint, request, \
+                redirect, render_template, url_for, jsonify
 from flask.views import MethodView
 from models import Stop, Stopgeo, Routepredictions, Direction
 
@@ -9,29 +11,35 @@ BASE_URL = 'http://webservices.nextbus.com/service/publicXMLFeed?'
 PD_URL = 'command=predictions&a=sf-muni&stopId='
 STOP_NUM = 5
 
-nextbus = Blueprint('nextbus', __name__)
+nextbus = Blueprint('nextbus', __name__, template_folder='templates')
+
+class HomeView(MethodView):
+    def get(self):
+        return render_template('index.html')
 
 class StopView(MethodView):
     def get(self):
-        lon = request.args.get('lon')
-        lat = request.args.get('lat')
-        stoplist = getStops(lon,lat)
-        response = getResponse(stopList)
-        return jsonify(**response)
+        lon = float(request.args.get('lon', ''))
+        lat = float(request.args.get('lat', ''))
+        stoplist = self.getStops(lon,lat)
+        response = self.getResponse(stoplist)
+        return Response(json.dumps(response),  mimetype='application/json')
 
     def getStops(self,lon, lat):
-        stopList = Stopgeo.objects(location__near=[lon, lat])[:STOP_NUM]
-        return stopList
+        stoplist = Stopgeo.objects(location__near=[lon, lat])[:STOP_NUM]
+        return stoplist
 
-    def getResponse(self,stopList):
-        response = {}
-        for stop in stopList:
+    def getResponse(self,stoplist):
+        response = []
+        for stop in stoplist:
             stopid = stop['stopid']
             stoptitle = stop['title']
-            stop_routes_info = Stop.objects(stopid=stopid).to_json()
+            stop_routes_info = Stop.objects(stopid=stopid)
             if len(stop_routes_info) == 0:
-                stop_routes_info = getStopInfo(stopid, stoptitle)
-            response[stopid]=stop_routes_info
+                stop_routes_info = self.getStopInfo(stopid, stoptitle)
+            else:
+                stop_routes_info = stop_routes_info.to_json()
+            response.append(json.loads(stop_routes_info))
 
         return response
 
@@ -39,7 +47,7 @@ class StopView(MethodView):
         try:
             response = urllib2.urlopen(BASE_URL+PD_URL+stopid)
             response_xml = ET.fromstring(response.read())
-            routeprelist = getRoutePreList(response_xml)
+            routeprelist = self.getRoutePreList(response_xml)
             stop = Stop(stopid=stopid, 
                         title=stoptitle,
                         routeprelist=routeprelist)
@@ -53,7 +61,7 @@ class StopView(MethodView):
     def getRoutePreList(self,response_xml):
         routeprelist = []
         for predictions_xml in response_xml.findall('predictions'):
-            dirlist = getDirectionList(predictions_xml)
+            dirlist = self.getDirectionList(predictions_xml)
             hasdata = False if len(dirlist)==0 else True
             predictions = Routepredictions(
                 routetag = predictions_xml.get('routeTag'),
@@ -66,7 +74,7 @@ class StopView(MethodView):
         directionList = []
         for direction_xml in predictions_xml.findall('direction'):
 
-            timelist = getTimeList(direction_xml)
+            timelist = self.getTimeList(direction_xml)
             direction = Direction(title=direction_xml.get('title'),
                                 timelist=timelist)
             directionList.append(direction)
@@ -78,10 +86,5 @@ class StopView(MethodView):
             timelist.append(int(prediction.attrib['seconds']))
         return timelist
 
-
-
-
-
-
-
-findbus.add_url_rule('/findbus/',view_func=StopView.as)
+nextbus.add_url_rule('/',view_func=HomeView.as_view('home'))
+nextbus.add_url_rule('/stop.js',view_func=StopView.as_view('stop'))
