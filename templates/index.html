@@ -2,6 +2,7 @@
 <html>
     <head>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        
     </head>
 
 <style>
@@ -11,6 +12,19 @@
     text-align:center;
     padding:5px;
 }
+
+.stop {
+    padding: 10px;
+    border-bottom: 1px solid #CCC;
+}
+
+.route {
+  display: inline;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
 </style>
 
 <body>
@@ -38,7 +52,6 @@ function displaystop(stopobj){
     var routelist = stopobj.routeprelist
     for (var i=0, len=routelist.length; i < len; i++) {
         var innerdiv = document.createElement('div');
-        innerdiv.className = 'route';
         div.appendChild(innerdiv);
         displayroute(routelist[i],innerdiv)
     }
@@ -46,6 +59,7 @@ function displaystop(stopobj){
 
 function displayroute(routeobj, div){
     var routetag = routeobj.routetag;
+    div.className = 'route';
     div.innerHTML = 'Route: '+routetag;
     if(routeobj.hasdata==false){
         var innerdiv = document.createElement('div');
@@ -53,11 +67,10 @@ function displayroute(routeobj, div){
         innerdiv.innerHTML = "Current bus is not available."
         return;
     }
-    dirlist = routeobj.dirlist;
+    var dirlist = routeobj.dirlist;
     for (var i=0, len=dirlist.length; i < len; i++) {
         var innerdiv = document.createElement('div');
         div.appendChild(innerdiv);
-        innerdiv.className = 'direction';
         displaydir(dirlist[i], innerdiv);
     }
 }
@@ -65,10 +78,17 @@ function displayroute(routeobj, div){
 
 function displaydir(dir, div){
     var title = dir.title;
+    div.className = 'direction';
     div.innerHTML = 'Direction: '+title;
-
-    //div.appendChild(innerdiv);
-
+    var innerdiv = document.createElement('div');
+    div.appendChild(innerdiv);
+    innerdiv.className = 'time';
+    innerdiv.innerHTML = 'Bus coming in ';
+    var timelist = dir.timelist;
+    for(var i=0, len=timelist.length;i < len;i++){
+        var min = timelist[i]/60;
+        innerdiv.innerHTML = innerdiv.innerHTML+ Math.floor(min) +' ';
+    }
 }
 
 function setPosition(position) {
@@ -78,7 +98,7 @@ function setPosition(position) {
     $.getJSON('http://127.0.0.1:5000/stop.js?lon=-122.42199&lat=37.7728799', function(data){
         for (var i=0, len=data.length; i < len; i++) {
             displaystop(data[i])
-        }   
+        }
     })
       .fail(function(){
         console.log( "error" );
