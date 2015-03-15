@@ -95,7 +95,8 @@ function setPosition(position) {
 
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    $.getJSON('http://127.0.0.1:5000/stop.js?lon=-122.42199&lat=37.7728799', function(data){
+    var url = window.location.hostname;
+    $.getJSON(url + '/stop.js?lon=-122.42199&lat=37.7728799', function(data){
         for (var i=0, len=data.length; i < len; i++) {
             displaystop(data[i])
         }
