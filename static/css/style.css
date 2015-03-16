@@ -1,0 +1,42 @@
+body {
+  background-color: #EEE;
+  color: #777;
+  font-family: "ff-clan-web-pro-wide", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: rgb(75, 75, 75);
+}
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1.125em;
+}
+
+header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+
+.stop {
+    padding: 10px;
+    border-bottom: 1px solid #CCC;
+}
+
+.route {
+  display: inline;
+  font-size: 16px;
+}
+
+.direction {
+  font-size: 16px;
+}
+
+.time {
+  font-size: 16px;
+}
