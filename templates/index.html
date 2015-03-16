@@ -44,34 +44,42 @@ function getLocation() {
 }
 
 function displaystop(stopobj){
-    var div = document.createElement('div');
-    div.className = 'stop';
-    document.getElementsByTagName('body')[0].appendChild(div);
-    div.innerHTML = "Stop Name: "+stopobj.title;
-
+    var li = document.createElement('li');
+    li.className = 'stop';
+    document.getElementsByTagName('body')[0].appendChild(li);
+    li.innerHTML = "Stop Name: "+stopobj.title;
+    
+    var ul = document.createElement('ul');
+    ul.className = 'routelist';
+    li.appendChild(ul);
     var routelist = stopobj.routeprelist
     for (var i=0, len=routelist.length; i < len; i++) {
-        var innerdiv = document.createElement('div');
-        div.appendChild(innerdiv);
-        displayroute(routelist[i],innerdiv)
+        var innerli = document.createElement('li');
+        ul.appendChild(innerli);
+        displayroute(routelist[i],innerli)
     }
 }
 
-function displayroute(routeobj, div){
+function displayroute(routeobj, li){
     var routetag = routeobj.routetag;
-    div.className = 'route';
-    div.innerHTML = 'Route: '+routetag;
+    li.className = 'route';
+    li.innerHTML = 'Route: '+routetag;
+
+    var ul = document.createElement('ul');
+    ul.className = 'directionlist';
+    li.appendChild(ul);
+
     if(routeobj.hasdata==false){
-        var innerdiv = document.createElement('div');
-        div.appendChild(innerdiv);
-        innerdiv.innerHTML = "Current bus is not available."
+        var innerli = document.createElement('li');
+        ul.appendChild(innerli);
+        innerli.innerHTML = "Current bus is not available."
         return;
     }
     var dirlist = routeobj.dirlist;
     for (var i=0, len=dirlist.length; i < len; i++) {
-        var innerdiv = document.createElement('div');
-        div.appendChild(innerdiv);
-        displaydir(dirlist[i], innerdiv);
+        var innerli = document.createElement('li');
+        ul.appendChild(innerli);
+        displaydir(dirlist[i], innerli);
     }
 }
 
@@ -95,8 +103,7 @@ function setPosition(position) {
 
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    var url = window.location.hostname;
-    $.getJSON(url + '/stop.js?lon=-122.42199&lat=37.7728799', function(data){
+    $.getJSON('http://departuretime.info/stop.js?lon=-122.42199&lat=37.7728799', function(data){
         for (var i=0, len=data.length; i < len; i++) {
             displaystop(data[i])
         }

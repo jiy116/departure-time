@@ -38,7 +38,7 @@ class StopView(MethodView):
             if len(stop_routes_info) == 0:
                 stop_routes_info = self.getStopInfo(stopid, stoptitle)
             else:
-                stop_routes_info = stop_routes_info.to_json()
+                stop_routes_info = stop_routes_info[0].to_json()
             response.append(json.loads(stop_routes_info))
 
         return response
