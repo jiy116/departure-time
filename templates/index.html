@@ -40,7 +40,7 @@ function displaystop(stopobj){
 function displayroute(routeobj, li){
     var routetag = routeobj.routetag;
     li.className = 'route';
-    li.innerHTML = 'Route: '+routetag;
+    li.innerHTML = 'Bus: '+routetag;
 
     var ul = document.createElement('ul');
     ul.className = 'directionlist';
@@ -68,25 +68,27 @@ function displaydir(dir, div){
     var innerdiv = document.createElement('div');
     div.appendChild(innerdiv);
     innerdiv.className = 'time';
-    innerdiv.innerHTML = 'Bus coming in ';
+    innerdiv.innerHTML = 'Coming in ';
     var timelist = dir.timelist;
     for(var i=0, len=timelist.length;i < len;i++){
         var min = timelist[i]/60;
         innerdiv.innerHTML = innerdiv.innerHTML+ Math.floor(min) +' ';
     }
+    innerdiv.innerHTML += ' minutes';
 }
 
 function setPosition(position) {
-
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    $.getJSON('http://departuretime.info/stop.js?lon=-122.42199&lat=37.7728799', function(data){
+    var url = 'http://departuretime.info/stop.js?lon='+longitude+'&lat='+latitude;
+
+    $.getJSON(url, function(data){
         for (var i=0, len=data.length; i < len; i++) {
             displaystop(data[i])
         }
     })
       .fail(function(){
-        console.log( "error" );
+        console.log( "Can not get json data" );
     });
 }
 </script>
