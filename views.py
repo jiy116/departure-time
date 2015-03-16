@@ -19,11 +19,15 @@ class HomeView(MethodView):
 
 class StopView(MethodView):
     def get(self):
-        lon = float(request.args.get('lon', ''))
-        lat = float(request.args.get('lat', ''))
-        stoplist = self.getStops(lon,lat)
-        response = self.getResponse(stoplist)
-        return Response(json.dumps(response),  mimetype='application/json')
+        try:
+            lon = float(request.args.get('lon', ''))
+            lat = float(request.args.get('lat', ''))
+            stoplist = self.getStops(lon,lat)
+            response = self.getResponse(stoplist)
+            return Response(json.dumps(response),  mimetype='application/json')
+        except Exception, e:
+            logging.exception(e)
+            return Response('Request data unavailable')
 
     def getStops(self,lon, lat):
         stoplist = Stopgeo.objects(location__near=[lon, lat])[:STOP_NUM]
@@ -48,7 +52,7 @@ class StopView(MethodView):
             response = urllib2.urlopen(BASE_URL+PD_URL+stopid)
             response_xml = ET.fromstring(response.read())
             routeprelist = self.getRoutePreList(response_xml)
-            stop = Stop(stopid=stopid, 
+            stop = Stop(stopid=stopid,
                         title=stoptitle,
                         routeprelist=routeprelist)
             stop.save()
