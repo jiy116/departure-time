@@ -29,7 +29,7 @@ class StopView(MethodView):
             logging.exception(e)
             return Response('Request data unavailable')
 
-    def getStops(self,lon, lat):
+    def getStops(self, lon, lat):
         stoplist = Stopgeo.objects(location__near=[lon, lat])[:STOP_NUM]
         return stoplist
 
@@ -39,7 +39,7 @@ class StopView(MethodView):
             stopid = stop['stopid']
             stoptitle = stop['title']
             stop_routes_info = Stop.objects(stopid=stopid)
-            if len(stop_routes_info) == 0:
+            if not stop_routes_info:
                 stop_routes_info = self.getStopInfo(stopid, stoptitle)
             else:
                 stop_routes_info = stop_routes_info[0].to_json()
@@ -56,7 +56,6 @@ class StopView(MethodView):
                         title=stoptitle,
                         routeprelist=routeprelist)
             stop.save()
-            #print stop.to_json()
             return stop.to_json()
 
         except Exception, e:
