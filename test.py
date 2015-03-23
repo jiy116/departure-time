@@ -2,22 +2,50 @@ import unittest
 import xml.etree.ElementTree as ET
 import json
 import views
+from models import Stop, Stopgeo, Routepredictions, Direction
 
 class TestFunctions(unittest.TestCase):
     
     def setUp(self):
         self.stopview = views.StopView()
+        Stop.drop_collection()
+
+    def tearDown(self):
+        Stop.drop_collection()
 
     def testgetStops(self):
-        reslist = []
-        explist = ["15673","17757","15672","14954","15772"]
+        stops_id = []
+        expected = ['15673','17757','15672','14954','15772']
         stops = self.stopview.getStops(-122.42199, 37.7728799)
         for stop in stops:
-            reslist.append(stop['stopid'])
-        self.assertEqual(reslist,explist, 'Stops near by not match')
+            stops_id.append(stop['stopid'])
+        self.assertEqual(stops_id,expected, 'Stops near by not match')
 
     def testgetResponse(self):
-        pass
+        stoplist = self.stopview.getStops(-122.42199, 37.7728799)
+        response = self.stopview.getResponse(stoplist)
+        self.assertEqual(len(response), views.STOP_NUM, 'response length not match')
+        stops_id = []
+        for stop in stoplist:
+            stops_id.append(stop['stopid'])
+        #check if write into database
+        for stopid in stops_id:
+            self.assertEqual(len(Stop.objects(stopid=stopid)), 1, \
+                            'did not write into database')
+
+    def testgetStopInfo(self):
+        stop_info = Stop.objects(stopid='15642')
+        self.assertEqual(len(stop_info), 0)
+
+        ret = self.stopview.getStopInfo('15642',\
+                                  'Market Between 4th &amp; 3rd St')
+        #check if add into datebase
+        stop_info = Stop.objects(stopid='15642')
+        self.assertEqual(len(stop_info), 1)
+        self.assertEqual(stop_info[0].stopid, '15642', 'stop id not match')
+        self.assertEqual(stop_info[0].title,'Market Between 4th &amp; 3rd St', \
+                                        'stop title not match')
+        self.assertEqual(len(stop_info[0].routeprelist),4)
         
     def testgetRoutePreList(self):
         xml = ET.parse('test/data.xml')
