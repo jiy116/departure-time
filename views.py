@@ -5,13 +5,12 @@ import xml.etree.ElementTree as ET
 from flask import Response, Blueprint, request, \
                 redirect, render_template, url_for, jsonify
 from flask.views import MethodView
+nextbus = Blueprint('nextbus', __name__, template_folder='templates')
 from models import Stop, Stopgeo, Routepredictions, Direction
 
 BASE_URL = 'http://webservices.nextbus.com/service/publicXMLFeed?'
 PD_URL = 'command=predictions&a=sf-muni&stopId='
 STOP_NUM = 5
-
-nextbus = Blueprint('nextbus', __name__, template_folder='templates')
 
 class HomeView(MethodView):
     def get(self):
@@ -38,16 +37,16 @@ class StopView(MethodView):
         for stop in stoplist:
             stopid = stop['stopid']
             stoptitle = stop['title']
-            stop_routes_info = Stop.objects(stopid=stopid)
+            stop_info = Stop.objects(stopid=stopid)
             if not stop_routes_info:
                 stop_routes_info = self.getStopInfo(stopid, stoptitle)
             else:
-                stop_routes_info = stop_routes_info[0].to_json()
-            response.append(json.loads(stop_routes_info))
+                stop_info = stop_info[0].to_json()
+            response.append(json.loads(stop_info))
 
         return response
 
-    def getStopInfo(self,stopid, stoptitle):
+    def getStopInfo(self, stopid, stoptitle):
         try:
             response = urllib2.urlopen(BASE_URL+PD_URL+stopid)
             response_xml = ET.fromstring(response.read())
@@ -61,7 +60,7 @@ class StopView(MethodView):
         except Exception, e:
             logging.exception(e)
 
-    def getRoutePreList(self,response_xml):
+    def getRoutePreList(self, response_xml):
         routeprelist = []
         for predictions_xml in response_xml.findall('predictions'):
             dirlist = self.getDirectionList(predictions_xml)
@@ -73,7 +72,7 @@ class StopView(MethodView):
             routeprelist.append(predictions)
         return routeprelist
 
-    def getDirectionList(self,predictions_xml):
+    def getDirectionList(self, predictions_xml):
         directionList = []
         for direction_xml in predictions_xml.findall('direction'):
 
@@ -83,7 +82,7 @@ class StopView(MethodView):
             directionList.append(direction)
         return directionList
 
-    def getTimeList(self,direction_xml):
+    def getTimeList(self, direction_xml):
         timelist = []
         for prediction in direction_xml.iter('prediction'):
             timelist.append(int(prediction.attrib['seconds']))
