@@ -9,17 +9,6 @@ Find the five closet muni bus stops near you and buses that are arriving at thes
 
 You can find the web site here http://departuretime.info
 
-##API
-stop.js?lon=\<lon\>&lat=\<lat\>&start=\<n\>&offset=\<m\>
-
-start and offset are optional
-
-start: nth nearest stop, default 0
-
-offset: number of stops, default 5
-
-reutrn stops and predictions infomation
-
 ## Things have learned
 * Python: Have limited knowledge with python before, be more comfortable coding in python after this execise, learned how to avoid circular dependencies in python; how to parse the XML file
 * MongoDB: Learned how to use the mongoDB and how to use python mongoengine to interact with mongoDB, its funcationality and advantages compare to other database and other types of database.
@@ -34,3 +23,14 @@ reutrn stops and predictions infomation
 * More functional API, the API now is too simple to satisfy the real-life requirement
 * More attractive front end to delivere the data to users, and the usage of framework
 * Mobile support. Considering most users will use smart phones to use this application.
+
+##API
+stop.js?lon=\<lon\>&lat=\<lat\>&start=\<n\>&offset=\<m\>
+
+start and offset are optional
+
+start: nth nearest stop, default 0
+
+offset: number of stops, default 5
+
+reutrn stops and predictions infomation
