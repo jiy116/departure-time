@@ -2,6 +2,8 @@ from flask import url_for
 from app import db
 from datetime import datetime 
 
+cache_time = 120   #seconds
+
 class Stop(db.Document):
     created = db.DateTimeField(default=datetime.now)
     title = db.StringField(max_length=255, required=True)
@@ -12,7 +14,7 @@ class Stop(db.Document):
             'stopid',
             {
                 'fields':['created'],
-                'expireAfterSeconds':60
+                'expireAfterSeconds': cache_time
             }
         ]
     }
