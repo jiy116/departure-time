@@ -18,7 +18,16 @@ class TestFunctions(unittest.TestCase):
         stops = self.stopview.getStops(-122.42199, 37.7728799)
         for stop in stops:
             stops_id.append(stop['stopid'])
-        self.assertEqual(stops_id,expected, 'Stops near by not match')
+        self.assertEqual(stops_id.sort(),expected.sort(), \
+                                 'Stops near by not match')
+        stops = self.stopview.getStops(-122.42199, 37.7728799,5,10)
+        expected = ['13013','16019','15685','16606','136606']
+        stop_id = []
+        for stop in stops:
+            stops_id.append(stop['stopid'])
+        self.assertEqual(stops_id.sort(),expected.sort(), \
+                                'Stops near by not match')
+
 
     def testgetResponse(self):
         stoplist = self.stopview.getStops(-122.42199, 37.7728799)
