@@ -56,7 +56,7 @@ def getStopList(routeList):
 
             route = response_xml[0]
             for stop in route.findall('stop'):
-                if not stop.attrib['tag'] in stopSet:
+                if stop.attrib['tag'] not in stopSet:
                     stopList.append(stop.attrib)
                     stopSet.add(stop.attrib['tag'])
         return stopList
