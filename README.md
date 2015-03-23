@@ -1,6 +1,6 @@
 # departure-time
 
-Find the five closet muni bus stops near you and buses that are arriving at these stops
+Find the muni bus stops near you and buses that are arriving at these stops
 
 * Date: Nextbus API(support geolocation for stops)
 * Back-end language: Python(limited experience)
