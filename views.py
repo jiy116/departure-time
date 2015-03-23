@@ -1,5 +1,4 @@
 import urllib2
-import logging
 import json
 import xml.etree.ElementTree as ET
 from flask import Response, Blueprint, request, \
@@ -18,15 +17,11 @@ class HomeView(MethodView):
 
 class StopView(MethodView):
     def get(self):
-        try:
-            lon = float(request.args.get('lon', ''))
-            lat = float(request.args.get('lat', ''))
-            stoplist = self.getStops(lon,lat)
-            response = self.getResponse(stoplist)
-            return Response(json.dumps(response),  mimetype='application/json')
-        except Exception, e:
-            logging.exception(e)
-            return Response('Request data unavailable')
+        lon = float(request.args.get('lon', ''))
+        lat = float(request.args.get('lat', ''))
+        stoplist = self.getStops(lon,lat)
+        response = self.getResponse(stoplist)
+        return Response(json.dumps(response),  mimetype='application/json')
 
     def getStops(self, lon, lat):
         stoplist = Stopgeo.objects(location__near=[lon, lat])[:STOP_NUM]
@@ -38,27 +33,22 @@ class StopView(MethodView):
             stopid = stop['stopid']
             stoptitle = stop['title']
             stop_info = Stop.objects(stopid=stopid)
-            if not stop_routes_info:
-                stop_routes_info = self.getStopInfo(stopid, stoptitle)
+            if not stop_info:
+                stop_info = self.getStopInfo(stopid, stoptitle)
             else:
                 stop_info = stop_info[0].to_json()
             response.append(json.loads(stop_info))
-
         return response
 
     def getStopInfo(self, stopid, stoptitle):
-        try:
-            response = urllib2.urlopen(BASE_URL+PD_URL+stopid)
-            response_xml = ET.fromstring(response.read())
-            routeprelist = self.getRoutePreList(response_xml)
-            stop = Stop(stopid=stopid,
-                        title=stoptitle,
-                        routeprelist=routeprelist)
-            stop.save()
-            return stop.to_json()
-
-        except Exception, e:
-            logging.exception(e)
+        response = urllib2.urlopen(BASE_URL+PD_URL+stopid)
+        response_xml = ET.fromstring(response.read())
+        routeprelist = self.getRoutePreList(response_xml)
+        stop = Stop(stopid=stopid,
+                    title=stoptitle,
+                    routeprelist=routeprelist)
+        stop.save()
+        return stop.to_json()
 
     def getRoutePreList(self, response_xml):
         routeprelist = []
