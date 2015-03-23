@@ -10,7 +10,7 @@ Find the five closet muni bus stops near you and buses that are arriving at thes
 You can find the web site here http://departuretime.info
 
 ##API
-http://departuretime.info/stop.js?lon=\<lon\>&lat=\<lat\>&start=\<n\>&offset=\<m\>
+stop.js?lon=\<lon\>&lat=\<lat\>&start=\<n\>&offset=\<m\>
 
 start and offset are optional
 
