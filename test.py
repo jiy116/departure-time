@@ -5,7 +5,6 @@ import views
 from models import Stop, Stopgeo, Routepredictions, Direction
 
 class TestFunctions(unittest.TestCase):
-    
     def setUp(self):
         self.stopview = views.StopView()
         Stop.drop_collection()
