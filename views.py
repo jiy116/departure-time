@@ -19,12 +19,19 @@ class StopView(MethodView):
     def get(self):
         lon = float(request.args.get('lon', ''))
         lat = float(request.args.get('lat', ''))
-        stoplist = self.getStops(lon,lat)
+        
+        if 'start' in request.args:
+            start = int(request.args.get('start', ''))
+            offset = int(request.args.get('offset', ''))
+            stoplist = self.getStops(lon,lat,start,offset)
+        else:
+            stoplist = self.getStops(lon,lat)
         response = self.getResponse(stoplist)
         return Response(json.dumps(response),  mimetype='application/json')
 
-    def getStops(self, lon, lat):
-        stoplist = Stopgeo.objects(location__near=[lon, lat])[:STOP_NUM]
+    def getStops(self, lon, lat, start=0, offset=STOP_NUM):
+        end = start + offset
+        stoplist = Stopgeo.objects(location__near=[lon, lat])[start:end]
         return stoplist
 
     def getResponse(self,stoplist):
