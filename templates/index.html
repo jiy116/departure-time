@@ -80,7 +80,7 @@ function displaydir(dir, div){
 function setPosition(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    var url = 'http://departuretime.info/stop.js?lon='+longitude+'&lat='+latitude;
+    var url = '/stop.js?lon='+longitude+'&lat='+latitude;
 
     $.getJSON(url, function(data){
         for (var i=0, len=data.length; i < len; i++) {
