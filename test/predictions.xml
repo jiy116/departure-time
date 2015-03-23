@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<predictions agencyTitle="San Francisco Muni" routeTitle="1-California" routeTag="1" stopTitle="Sacramento St &amp; Polk St" stopTag="6311">
+  <direction title="Outbound to the Richmond District">
+  <prediction epochTime="1427091085531" seconds="889" minutes="14" isDeparture="false" affectedByLayover="true" dirTag="1____O_F00" vehicle="5605" block="0101" tripTag="6524890" />
+  <prediction epochTime="1427092285531" seconds="2089" minutes="34" isDeparture="false" affectedByLayover="true" dirTag="1____O_F00" vehicle="5518" block="0108" tripTag="6524889" />
+  <prediction epochTime="1427093545531" seconds="3349" minutes="55" isDeparture="false" affectedByLayover="true" dirTag="1____O_F00" vehicle="5594" block="0102" tripTag="6524888" />
+  <prediction epochTime="1427094732251" seconds="4536" minutes="75" isDeparture="false" affectedByLayover="true" dirTag="1____O_F00" vehicle="5554" block="0106" tripTag="6524887" />
+  </direction>
+  <direction title="Inbound to Baker Beach">
+  <prediction epochTime="1427094069571" seconds="233" minutes="3" isDeparture="false" dirTag="29___I_J00" vehicle="8704" block="2910" tripTag="6546229" />
+  <prediction epochTime="1427095994962" seconds="2159" minutes="35" isDeparture="false" dirTag="29___I_J00" vehicle="8630" block="9592" tripTag="6546230" />
+  <prediction epochTime="1427096366227" seconds="2530" minutes="42" isDeparture="false" dirTag="29___I_J00" vehicle="8652" block="9593" tripTag="6546231" />
+  <prediction epochTime="1427097933850" seconds="4098" minutes="68" isDeparture="false" affectedByLayover="true" dirTag="29___I_F00" vehicle="8658" block="2903" tripTag="6546232" />
+  <prediction epochTime="1427099133850" seconds="5298" minutes="88" isDeparture="false" affectedByLayover="true" dirTag="29___I_F00" vehicle="8644" block="2911" tripTag="6546233" />
+  </direction>
+<message text="Go to sfmta.com 4 Email/Text Alerts." priority="Low"/>
+<message text="We&apos;re on Twitter: @sfmta_muni" priority="Low"/>
+</predictions>

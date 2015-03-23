@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<body copyright="All data copyright San Francisco Muni 2015.">
+<predictions agencyTitle="San Francisco Muni" routeTitle="36-Teresita" routeTag="36" stopTitle="Mission St &amp; Precita" stopTag="5611">
+  <direction title="Outbound to The Mission District">
+  <prediction epochTime="1427071539467" seconds="1222" minutes="20" isDeparture="false" dirTag="36___O_F00" vehicle="8503" block="3601" tripTag="6550659" />
+  <prediction epochTime="1427073132761" seconds="2816" minutes="46" isDeparture="false" affectedByLayover="true" dirTag="36___O_F00" vehicle="8525" block="3603" tripTag="6550660" />
+  <prediction epochTime="1427074812761" seconds="4496" minutes="74" isDeparture="false" affectedByLayover="true" dirTag="36___O_F00" vehicle="8528" block="3602" tripTag="6550661" />
+  </direction>
+<message text="Go to sfmta.com 4 Email/Text Alerts." priority="Low"/>
+<message text="We&apos;re on Twitter: @sfmta_muni" priority="Low"/>
+</predictions>
+<predictions agencyTitle="San Francisco Muni" routeTitle="14-Mission" routeTag="14" stopTitle="Mission St &amp; Precita" stopTag="5611">
+  <direction title="Inbound to Downtown">
+  <prediction epochTime="1427071764262" seconds="1447" minutes="24" isDeparture="false" dirTag="14___I_F00" vehicle="5465" block="1407" tripTag="6599584" />
+  <prediction epochTime="1427072256282" seconds="1939" minutes="32" isDeparture="false" affectedByLayover="true" dirTag="14___I_F00" vehicle="5409" block="1410" tripTag="6599585" />
+  <prediction epochTime="1427072256282" seconds="1939" minutes="32" isDeparture="false" affectedByLayover="true" dirTag="14___I_F00" vehicle="8723" block="1410" tripTag="6599585" />
+  <prediction epochTime="1427072916282" seconds="2599" minutes="43" isDeparture="false" affectedByLayover="true" dirTag="14___I_F00" vehicle="7123" block="1413" tripTag="6599586" />
+  <prediction epochTime="1427073576282" seconds="3259" minutes="54" isDeparture="false" affectedByLayover="true" dirTag="14___I_F00" vehicle="7115" block="1404" tripTag="6599587" />
+  </direction>
+<message text="Go to sfmta.com 4 Email/Text Alerts." priority="Low"/>
+<message text="We&apos;re on Twitter: @sfmta_muni" priority="Low"/>
+</predictions>
+<predictions agencyTitle="San Francisco Muni" routeTitle="49-Mission/Van Ness" routeTag="49" stopTitle="Mission St &amp; Precita" stopTag="5611">
+  <direction title="Inbound to Fort Mason">
+  <prediction epochTime="1427070628020" seconds="311" minutes="5" isDeparture="false" dirTag="49___I_F00" vehicle="7102" block="4905" tripTag="6600085" />
+  <prediction epochTime="1427071192462" seconds="875" minutes="14" isDeparture="false" dirTag="49___I_F00" vehicle="7119" block="4909" tripTag="6600086" />
+  <prediction epochTime="1427071809347" seconds="1492" minutes="24" isDeparture="false" affectedByLayover="true" dirTag="49___I_F00" vehicle="7103" block="4907" tripTag="6600087" />
+  <prediction epochTime="1427072469347" seconds="2152" minutes="35" isDeparture="false" affectedByLayover="true" dirTag="49___I_F00" vehicle="7104" block="4913" tripTag="6600088" />
+  <prediction epochTime="1427073129347" seconds="2812" minutes="46" isDeparture="false" affectedByLayover="true" dirTag="49___I_F00" vehicle="7122" block="4911" tripTag="6600089" />
+  </direction>
+<message text="Go to sfmta.com 4 Email/Text Alerts." priority="Low"/>
+<message text="We&apos;re on Twitter: @sfmta_muni" priority="Low"/>
+</predictions>
+</body>

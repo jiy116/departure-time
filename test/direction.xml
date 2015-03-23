@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<direction title="Inbound to the Marina District">
+<prediction epochTime="1427088977871" seconds="360" minutes="6" isDeparture="false" dirTag="43___I_J00" vehicle="8364" block="4310" tripTag="6554397" />
+<prediction epochTime="1427090219790" seconds="1602" minutes="26" isDeparture="false" dirTag="43___I_J00" vehicle="8136" block="4312" tripTag="6554392" />
+<prediction epochTime="1427091279424" seconds="2661" minutes="44" isDeparture="false" affectedByLayover="true" dirTag="43___I_J00" vehicle="8117" block="4307" tripTag="6554393" />
+<prediction epochTime="1427092479424" seconds="3861" minutes="64" isDeparture="false" affectedByLayover="true" dirTag="43___I_J00" vehicle="8157" block="4311" tripTag="6554396" />
+<prediction epochTime="1427093679424" seconds="5061" minutes="84" isDeparture="false" affectedByLayover="true" dirTag="43___I_J00" vehicle="8323" block="4304" tripTag="6554394" />
+</direction>
